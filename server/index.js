@@ -4,6 +4,7 @@ const { graphql } = require('graphql')
 const schema = require('../server/schema/schema')
 const { graphqlHTTP } = require('express-graphql')
 const connectDB = require('./config/db')
+const cors = require('cors')
 require('dotenv').config()
 
 const port = process.env.PORT || 8000
@@ -16,8 +17,10 @@ const  colored_port = `${port}`.bgBlack
 // MongoDB Connection
 connectDB()
 
+
 const app = express()
 
+app.use(cors())
 app.use('/graphql', graphqlHTTP({
     schema,
     graphiql :process.env.NODE_ENV === 'development'
